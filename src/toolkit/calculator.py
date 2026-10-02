@@ -4,6 +4,7 @@ from .errors import *
 
 
 def validation(example):
+    """"Проверка исходного выражения на базовые ошибки"""
     if not example or not example.strip():
         raise EmptyExpressionError("Пустая строка")
 
@@ -84,6 +85,7 @@ def validation(example):
                 current = ""
 
 def safe_pow(base, exp):
+    """"Безопасное возведение в степень"""
     if base >= 0:
         return base ** exp
     frac = Fraction(exp).limit_denominator()
@@ -95,9 +97,11 @@ def safe_pow(base, exp):
         return abs(base) ** exp
 
 def IsOp(s):
+    """"Проверка элемента на принадлежность к операциям"""
     return str(s) in '+-*/^%'
 
 def find_num(example, i):
+    """"Нахождение всего числа (всей его длинны включая дробную часть)"""
     num = ''
     while i < len(example) and (example[i] in '0123456789' or example[i] == '.'):
         num += example[i]
@@ -105,6 +109,7 @@ def find_num(example, i):
     return num, i
 
 def tokenization(example):
+    """"Преобразование в польскую запись"""
     while any(p in example for p in ("--", "++", "+-", "-+")):
         example = example.replace("--", "+").replace("++", "+").replace("+-", "-").replace("-+", "-")
 
@@ -173,6 +178,7 @@ def tokenization(example):
     return token
 
 def calculate(example):
+    """"Процесс вычисления"""
     token = tokenization(example)
     i = -1
     if len(token)>1:

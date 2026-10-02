@@ -5,11 +5,13 @@ MASS = ('g', 'kg')
 TEMP = ('c', 'f', 'k')
 
 def _group(u):
+    """"Проверка на приложения величин к одной смысловой группе"""
     if u in LENGTH: return 'length'
     if u in MASS: return 'mass'
     return 'temperature'
 
 def validation(start, end):
+    """"Валидация. Проверка на ошибки"""
     if start not in LENGTH + MASS + TEMP:
         raise UnknownUnitError(f"Неизвестная единица: {start}")
     if end not in LENGTH + MASS + TEMP:
@@ -18,6 +20,7 @@ def validation(start, end):
         raise IncompatibleUnitsError(f"Нельзя перевести {start} в {end}")
 
 def convert(value,start, end):
+    """Конвертация"""
     start = start.lower()
     end = end.lower()
 
