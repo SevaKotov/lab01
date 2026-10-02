@@ -8,11 +8,10 @@ def test_cli_calc():
         [sys.executable, "-m", "toolkit", "calc", "2+2"],
         capture_output=True,
         text=True,
-        check=False
+        check=False,
     )
     assert result.returncode == 0
     assert "4" in result.stdout
-
 
 def test_cli_error_code():
     """При ошибке код возврата должен быть 2."""
@@ -20,6 +19,6 @@ def test_cli_error_code():
         [sys.executable, "-m", "toolkit", "calc", "2+"],
         capture_output=True,
         text=True,
-        check=False
+        check=False,
     )
     assert result.returncode == 2
