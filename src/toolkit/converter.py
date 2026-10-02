@@ -1,4 +1,7 @@
-from .errors import IncompatibleUnitsError, UnknownUnitError, TemperatureBelongZero
+from .errors import IncompatibleUnitsError
+from .errors import InvalidNumberError
+from .errors import TemperatureBelongZero
+from .errors import UnknownUnitError
 
 LENGTH = ('mm', 'cm', 'm', 'km')
 MASS = ('g', 'kg')
@@ -10,7 +13,7 @@ def _group(u):
     if u in MASS: return 'mass'
     return 'temperature'
 
-def validation(start, end):
+def validation(value, start, end):
     """"Валидация. Проверка на ошибки"""
     if start not in LENGTH + MASS + TEMP:
         raise UnknownUnitError(f"Неизвестная единица: {start}")
@@ -18,13 +21,24 @@ def validation(start, end):
         raise UnknownUnitError(f"Неизвестная единица: {end}")
     if _group(start) != _group(end):
         raise IncompatibleUnitsError(f"Нельзя перевести {start} в {end}")
+    current = ""
+    for ch in value:
+        if ch in "0123456789.":
+            current += ch
+        else:
+            if current:
+                if current.count(".") > 1:
+                    raise InvalidNumberError(f"Неверное число: {current}")
+                if not any(c.isdigit() for c in current):
+                    raise InvalidNumberError(f"Неверное число: {current}")
+                current = ""
 
 def convert(value,start, end):
     """Конвертация"""
     start = start.lower()
     end = end.lower()
 
-    validation(start, end)
+    validation(value, start, end)
     if start == end and start in ('mm', 'cm', 'm', 'km', 'g', 'kg', 'c', 'f', 'k'):
         return f'{float(value)} {start}'
 

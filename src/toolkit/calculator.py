@@ -90,7 +90,7 @@ def safe_pow(base, exp):
         return base ** exp
     frac = Fraction(exp).limit_denominator()
     if frac.denominator % 2 == 0:
-        raise
+        raise InvalidNumberError(f"Число {base} возводится в {exp}-ю степень")
     if frac.numerator % 2 != 0:
         return -(abs(base) ** exp)
     else:

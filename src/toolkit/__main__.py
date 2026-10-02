@@ -1,8 +1,8 @@
 import argparse
 import sys
 
-from .converter import convert
 from .calculator import calculate
+from .converter import convert
 from .errors import ToolkitError
 
 
