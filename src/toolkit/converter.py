@@ -35,6 +35,7 @@ def validation(value, start, end):
 
 def convert(value,start, end):
     """Конвертация"""
+    value = str(value)
     start = start.lower()
     end = end.lower()
 

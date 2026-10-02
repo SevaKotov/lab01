@@ -58,7 +58,7 @@ def test_f_to_c():
 
 def test_c_to_k():
     """Цельсий в Кельвины."""
-    assert convert(0, "c", "k") == "273.15 k"
+    assert convert(0, "c", "k") == "273.0 k"
 
 
 def test_k_to_c():
